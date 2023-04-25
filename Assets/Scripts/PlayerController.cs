@@ -53,16 +53,12 @@ public class PlayerController : MonoBehaviour
             _animator.SetTrigger("Land");
             midAir = false;
         }
-        if (!_isGrounded)
-            if(CheckDistanceToGround() >= _heightToLandAnimation)
-                _states = States.MidAir;
-
-        
+        if (!_isGrounded && CheckDistanceToGround() >= _heightToLandAnimation)
+            _states = States.MidAir;
 
         if ((Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) && _canMove && _isGrounded)
             _states = States.Run;
         else if (_isGrounded) _states = States.Idle;
-
   
         if (_isGrounded && _canMove && Input.GetKeyDown(KeyCode.Space)) _states = States.Jump;
     }
@@ -107,8 +103,7 @@ public class PlayerController : MonoBehaviour
             if(!midAir)
                 _animator.SetTrigger("MidAir");         
             midAir = true;
-        }
-            
+        }          
         else if (_states == States.Jump)
         {
             tempFallingSpeed = _jumpForce;
