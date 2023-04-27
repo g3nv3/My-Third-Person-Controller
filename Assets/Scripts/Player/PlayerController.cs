@@ -45,10 +45,6 @@ public class PlayerController : MonoBehaviour, IControllable
 
     private void Start()
     {
-        PlayerInput.OnSpaceEnter.AddListener(Jump);
-        PlayerInput.OnMoveInput.AddListener(Move);
-        PlayerInput.NoneInput.AddListener(Idle);
-
         _transform = GetComponent<Transform>();
         _cameraTransform = Camera.main.GetComponent<Transform>();
         _characterController = GetComponent<CharacterController>();

@@ -1766,7 +1766,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182617488926921}
-  m_LocalRotation: {x: 0.11916733, y: 0.020807428, z: -0.0024979173, w: 0.992653}
+  m_LocalRotation: {x: 0.11916733, y: 0.020807497, z: -0.002497926, w: 0.992653}
   m_LocalPosition: {x: -15.442854, y: 26.684998, z: -12.861144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2096,7 +2096,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618113709833}
-  m_LocalRotation: {x: 0.16014706, y: 0.02068624, z: -0.003356914, w: 0.9868707}
+  m_LocalRotation: {x: 0.16014706, y: 0.020686274, z: -0.0033569194, w: 0.9868707}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2239,7 +2239,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618606976966}
-  m_LocalRotation: {x: 0.11916729, y: 0.020807447, z: -0.0024979191, w: 0.992653}
+  m_LocalRotation: {x: 0.11916729, y: 0.020807482, z: -0.0024979236, w: 0.992653}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2708,7 +2708,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182619140616272}
-  m_LocalRotation: {x: 0.12419335, y: 0.020794565, z: -0.0026032773, w: 0.9920367}
+  m_LocalRotation: {x: 0.12419335, y: 0.020794526, z: -0.0026032724, w: 0.9920367}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3016,12 +3016,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cdf47e2b18ead146af2405143b8b6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
   _characterController: {fileID: 0}
-  _canMove: 1
-  _playerMass: 5
+  _animator: {fileID: 0}
   _cameraTransform: {fileID: 0}
+  _playerMass: 5
   _isGrounded: 0
+  _canMove: 1
   _speed: 10
   _rotationSpeed: 15
   _jumpForce: 15
@@ -3146,6 +3146,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837def2489be6934fa66b14d2c9cdd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnSpaceEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMoveInput:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  NoneInput:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Idle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4158184319051833795
 GameObject:
   m_ObjectHideFlags: 0

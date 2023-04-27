@@ -4,9 +4,9 @@ using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
-    public static UnityEvent OnSpaceEnter = new UnityEvent();
-    public static UnityEvent<Vector3> OnMoveInput = new UnityEvent<Vector3>();
-    public static UnityEvent NoneInput = new UnityEvent();
+    public UnityEvent OnSpaceEnter = new UnityEvent();
+    public UnityEvent<Vector3> OnMoveInput = new UnityEvent<Vector3>();
+    public UnityEvent NoneInput = new UnityEvent();
 
     private IControllable _controllable;
     private bool cursorVisible = false;
