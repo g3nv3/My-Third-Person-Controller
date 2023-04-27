@@ -4,10 +4,7 @@ public class PlayerStateMove : IPlayerState
 {
     public PlayerController _playerController;
     private Vector3 movementDirection = Vector3.zero;
-    public virtual void Enter()
-    {
-        Debug.Log("Enter To Move");
-    }
+    public virtual void Enter() { }
 
     public PlayerStateMove(PlayerController playerController)
     {
@@ -64,8 +61,5 @@ public class PlayerStateMove : IPlayerState
         }
         else _playerController.TempFallingSpeed = -1f;
     }
-    public virtual void Exit()
-    {
-        Debug.Log("Exit Move");
-    }
+    public virtual void Exit() { }
 }

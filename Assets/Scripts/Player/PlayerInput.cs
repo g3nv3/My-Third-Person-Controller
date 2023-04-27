@@ -1,9 +1,10 @@
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class CharacterInputController : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     private IControllable _controllable;
+    private bool cursorVisible = false;
 
     private void Start()
     {
@@ -38,5 +39,12 @@ public class CharacterInputController : MonoBehaviour
     private void BasePlayerUpdate()
     {
         _controllable.BaseUpdate();
+    }
+
+    private void SetCursorVisible()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            cursorVisible = !cursorVisible;
+        Cursor.visible = cursorVisible;
     }
 }
