@@ -1,14 +1,21 @@
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
 {
+    public static UnityEvent OnSpaceEnter = new UnityEvent();
+    public static UnityEvent<Vector3> OnMoveInput = new UnityEvent<Vector3>();
+    public static UnityEvent NoneInput = new UnityEvent();
+
     private IControllable _controllable;
     private bool cursorVisible = false;
 
+
     private void Start()
     {
-        _controllable = GetComponent<IControllable>();   
+        _controllable = GetComponent<IControllable>();
+        Cursor.visible = cursorVisible;
     }
 
     private void Update()
@@ -16,6 +23,7 @@ public class PlayerInput : MonoBehaviour
         BasePlayerUpdate();
         ReadJump();
         ReadMove();        
+        SetCursorVisible();
     }
 
     private void ReadMove()
@@ -24,16 +32,16 @@ public class PlayerInput : MonoBehaviour
         var vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0, vertical);
 
-        if (direction != Vector3.zero) 
-            _controllable.Move(direction);
+        if (direction != Vector3.zero)
+            OnMoveInput.Invoke(direction);
         else
-            _controllable.Idle();
+            NoneInput.Invoke();
     }
 
     private void ReadJump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            _controllable.Jump();
+            OnSpaceEnter.Invoke();
     }
 
     private void BasePlayerUpdate()

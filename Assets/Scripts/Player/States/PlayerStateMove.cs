@@ -56,7 +56,7 @@ public class PlayerStateMove : IPlayerState
             _playerController.TempFallingSpeed += _playerController.GravityForce * _playerController.PlayerMass * Time.deltaTime;
             if (_playerController.CheckDistanceToGround() >= _playerController.HeightToMidAirAnimation)
             {
-                _playerController.SwitchState("MidAir");
+                _playerController.SwitchState(typeof(PlayerStateMidAir).Name);
             }
         }
         else _playerController.TempFallingSpeed = -1f;

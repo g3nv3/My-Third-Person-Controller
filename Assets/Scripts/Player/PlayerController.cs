@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour, IControllable
     public bool CanMove => _canMove;
     public float Speed => _speed;
     public float RotationSpeed => _rotationSpeed;
-    public Vector3 MoveDirection => movementDirection;
-    
+    public Vector3 MoveDirection => movementDirection;    
  
     [Header("Jump")]
     [SerializeField] private float _jumpForce;
@@ -46,13 +45,17 @@ public class PlayerController : MonoBehaviour, IControllable
 
     private void Start()
     {
+        PlayerInput.OnSpaceEnter.AddListener(Jump);
+        PlayerInput.OnMoveInput.AddListener(Move);
+        PlayerInput.NoneInput.AddListener(Idle);
+
         _transform = GetComponent<Transform>();
         _cameraTransform = Camera.main.GetComponent<Transform>();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
 
         InitStates();
-        SwitchState("Move");
+        SwitchState(typeof(PlayerStateIdle).Name);
     }
 
     public void BaseUpdate()
@@ -64,10 +67,10 @@ public class PlayerController : MonoBehaviour, IControllable
     {
         _playerStates = new Dictionary<string, IPlayerState>();
 
-        _playerStates["Move"] = new PlayerStateMove(this);
-        _playerStates["Idle"] = new PlayerStateIdle(this);
-        _playerStates["Jump"] = new PlayerStateJump(this);
-        _playerStates["MidAir"] = new PlayerStateMidAir(this);
+        _playerStates[typeof(PlayerStateMove).Name] = new PlayerStateMove(this);
+        _playerStates[typeof(PlayerStateIdle).Name] = new PlayerStateIdle(this);
+        _playerStates[typeof(PlayerStateJump).Name] = new PlayerStateJump(this);
+        _playerStates[typeof(PlayerStateMidAir).Name] = new PlayerStateMidAir(this);
     }
 
     public void SwitchState(string stateName)
@@ -92,19 +95,19 @@ public class PlayerController : MonoBehaviour, IControllable
         movementDirection = direction;
         if (_canMove && _isGrounded)
         {
-            SwitchState("Move");
+            SwitchState(typeof(PlayerStateMove).Name);
         }   
     }
 
     public void Jump()
     {
-        SwitchState("Jump");
+        SwitchState(typeof(PlayerStateJump).Name);
     }
 
     public void Idle()
     {
         if (_canMove && _isGrounded)
-            SwitchState("Idle");
+            SwitchState(typeof(PlayerStateIdle).Name);
     }
 
     public float CheckDistanceToGround()

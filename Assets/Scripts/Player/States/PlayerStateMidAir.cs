@@ -12,7 +12,7 @@ public class PlayerStateMidAir : PlayerStateMove
     {
         base.Update();
         if (_playerController.IsGrounded)
-            _playerController.SwitchState("Move");
+            _playerController.SwitchState(typeof(PlayerStateMove).Name);
 
     }
     public override void Exit()
