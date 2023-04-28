@@ -26,15 +26,18 @@ public class PlayerController : MonoBehaviour, IControllable
     [SerializeField] private bool _canMove;
     [SerializeField] private bool _isSwim;
     [SerializeField] private float _speed = 15f;
+    [SerializeField] private float _swimSpeed = 10f;
     [SerializeField] private float _rotationSpeed;
     private Vector3 movementDirection;
     public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
     public bool CanMove => _canMove;
     public bool IsSwim { get { return _isSwim; } set { _isSwim = value; } }
-    public float Speed => _speed;
+    public float Speed { get { return _speed; } set { _speed = value; } }
+    public float SwimSpeed => _swimSpeed;
     public float RotationSpeed => _rotationSpeed;
     public Vector3 MoveDirection => movementDirection;
 
+    public float BaseSpeed { get; set; }
  
     [Header("Jump")]
     [SerializeField] private float _jumpForce;
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour, IControllable
 
     private void Start()
     {
+        BaseSpeed = _speed;
         _transform = GetComponent<Transform>();
         _cameraTransform = Camera.main.GetComponent<Transform>();
         _characterController = GetComponent<CharacterController>();
