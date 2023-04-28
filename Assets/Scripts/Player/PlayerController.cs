@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IControllable
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour, IControllable
     [SerializeField] private Animator _animator;
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _playerMass = 5;
+    [SerializeField] private Transform _checkWaterTransform;
+
     private Dictionary<string, IPlayerState> _playerStates;
     private IPlayerState _currentPlayerState;
     private Transform _transform;
@@ -15,20 +18,23 @@ public class PlayerController : MonoBehaviour, IControllable
     public CharacterController PlayerCharacterController => _characterController;
     public Transform CameraTransform => _cameraTransform;
     public float PlayerMass => _playerMass;
+    public Transform CheckWaterTransform => _checkWaterTransform;
     public Transform PlayerTransform => _transform;
-    
 
     [Header("Move")]
     [SerializeField] private bool _isGrounded;
     [SerializeField] private bool _canMove;
-    [SerializeField] private float _speed;
+    [SerializeField] private bool _isSwim;
+    [SerializeField] private float _speed = 15f;
     [SerializeField] private float _rotationSpeed;
     private Vector3 movementDirection;
     public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
     public bool CanMove => _canMove;
+    public bool IsSwim { get { return _isSwim; } set { _isSwim = value; } }
     public float Speed => _speed;
     public float RotationSpeed => _rotationSpeed;
-    public Vector3 MoveDirection => movementDirection;    
+    public Vector3 MoveDirection => movementDirection;
+
  
     [Header("Jump")]
     [SerializeField] private float _jumpForce;
@@ -56,7 +62,7 @@ public class PlayerController : MonoBehaviour, IControllable
 
     public void BaseUpdate()
     {
-        _currentPlayerState.Update();
+        _currentPlayerState.Update();        
         _isGrounded = _characterController.isGrounded;
     }
     private void InitStates()
@@ -67,6 +73,8 @@ public class PlayerController : MonoBehaviour, IControllable
         _playerStates[typeof(PlayerStateIdle).Name] = new PlayerStateIdle(this);
         _playerStates[typeof(PlayerStateJump).Name] = new PlayerStateJump(this);
         _playerStates[typeof(PlayerStateMidAir).Name] = new PlayerStateMidAir(this);
+        _playerStates[typeof(PlayerStateSwimMove).Name] = new PlayerStateSwimMove(this);
+        _playerStates[typeof(PlayerStateSwimIdle).Name] = new PlayerStateSwimIdle(this);
     }
 
     public void SwitchState(string stateName)
@@ -81,11 +89,6 @@ public class PlayerController : MonoBehaviour, IControllable
         }       
     }
 
-    private IPlayerState GetState(string stateName)
-    {
-        return _playerStates[stateName];
-    }
-
     public void Move(Vector3 direction)
     {
         movementDirection = direction;
@@ -97,13 +100,18 @@ public class PlayerController : MonoBehaviour, IControllable
 
     public void Jump()
     {
-        SwitchState(typeof(PlayerStateJump).Name);
+        if(!_isSwim && _isGrounded && _canMove)
+            SwitchState(typeof(PlayerStateJump).Name);
     }
 
     public void Idle()
     {
         if (_canMove && _isGrounded)
+        {
+            movementDirection = Vector3.zero;
             SwitchState(typeof(PlayerStateIdle).Name);
+        }
+            
     }
 
     public float CheckDistanceToGround()
@@ -113,4 +121,6 @@ public class PlayerController : MonoBehaviour, IControllable
             return hit.distance;
         return 0f;
     }
+
+
 }

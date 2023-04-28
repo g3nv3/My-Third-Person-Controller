@@ -17,6 +17,7 @@ public class PlayerStateMidAir : PlayerStateMove
     }
     public override void Exit()
     {
-        _playerController.PlayerAnimator.SetTrigger("Land");
+        if(!_playerController.IsSwim)
+            _playerController.PlayerAnimator.SetTrigger("Land");
     }
 }
