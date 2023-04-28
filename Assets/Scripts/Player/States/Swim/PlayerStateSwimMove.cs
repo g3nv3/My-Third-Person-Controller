@@ -6,7 +6,6 @@ public class PlayerStateSwimMove : PlayerStateMove
     {
         _playerController.Speed = _playerController.SwimSpeed;
         _playerController.PlayerAnimator.SetBool("IsSwim", true);
-        Debug.Log("Swim Enter");
     }
 
     public override void Update()
@@ -18,6 +17,5 @@ public class PlayerStateSwimMove : PlayerStateMove
         _playerController.PlayerAnimator.SetBool("IsSwim", false);
         _playerController.IsSwim = false;
         _playerController.Speed = _playerController.BaseSpeed;
-        Debug.Log("Swim Exit");
     }
 }
