@@ -124,9 +124,7 @@ public class PlayerController : MonoBehaviour, IControllable
     public void Popup()
     {
         if (IsSwim)
-        {
             SwitchState(typeof(PlayerStateSwimMove).Name);
-        }
             
     }
 

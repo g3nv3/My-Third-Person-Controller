@@ -2,7 +2,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 public class PlayerStateSwimMove : PlayerStateMove
 {
-    private Quaternion tempRotation;
     public PlayerStateSwimMove(PlayerController playerController) : base(playerController) { }
     public override void Enter() 
     {
