@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IControllable
     [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _playerMass = 5;
     [SerializeField] private Transform _checkWaterTransform;
+    [SerializeField] private float _waterHeight;
 
     private Dictionary<string, IPlayerState> _playerStates;
     private IPlayerState _currentPlayerState;
@@ -19,7 +20,8 @@ public class PlayerController : MonoBehaviour, IControllable
     public Transform CameraTransform => _cameraTransform;
     public float PlayerMass => _playerMass;
     public Transform CheckWaterTransform => _checkWaterTransform;
-    public Transform PlayerTransform => _transform;
+    public Transform PlayerTransform { get { return _transform; } set { _transform = value; } }
+    public float WaterHeight => _waterHeight;
 
     [Header("Move")]
     [SerializeField] private bool _isGrounded;
@@ -27,7 +29,9 @@ public class PlayerController : MonoBehaviour, IControllable
     [SerializeField] private bool _isSwim;
     [SerializeField] private float _speed = 15f;
     [SerializeField] private float _swimSpeed = 10f;
-    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _rotationSpeed = 15f;
+    [SerializeField] private float _popupSpeed;
+
     private Vector3 movementDirection;
     public bool IsGrounded { get { return _isGrounded; } set { _isGrounded = value; } }
     public bool CanMove => _canMove;
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour, IControllable
     public Vector3 MoveDirection => movementDirection;
 
     public float BaseSpeed { get; set; }
+    public float PopupSpeed => _popupSpeed;
  
     [Header("Jump")]
     [SerializeField] private float _jumpForce;
@@ -46,7 +51,7 @@ public class PlayerController : MonoBehaviour, IControllable
     [Header("Gravity")]
     [SerializeField] private float _heightToMidAirAnimation = 1f;
     private float gravityForce = -9.8f;
-    private float tempFallingSpeed = -1f;
+    [SerializeField] private float tempFallingSpeed = -9.8f;
     public float HeightToMidAirAnimation => _heightToMidAirAnimation;    
     public float GravityForce => gravityForce;
     public float TempFallingSpeed { get { return tempFallingSpeed; } set { tempFallingSpeed = value; } }
@@ -121,10 +126,8 @@ public class PlayerController : MonoBehaviour, IControllable
     public float CheckDistanceToGround()
     {
         RaycastHit hit;
-        if(Physics.Raycast(_transform.position, Vector3.down, out hit))
+        if (Physics.Raycast(_transform.position + Vector3.up, Vector3.down, out hit))
             return hit.distance;
         return 0f;
     }
-
-
 }

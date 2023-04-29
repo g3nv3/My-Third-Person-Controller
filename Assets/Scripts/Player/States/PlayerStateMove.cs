@@ -25,6 +25,7 @@ public class PlayerStateMove : IPlayerState
         
         CalculateFallingSpeed();
         _playerController.PlayerCharacterController.Move(movementDirection * Time.deltaTime);
+            
     }
     public void CheckWater()
     {
@@ -38,6 +39,7 @@ public class PlayerStateMove : IPlayerState
                 break;
             }
         }
+        
     }
     private void MovePlayer(Vector3 direction)
     {
@@ -77,8 +79,9 @@ public class PlayerStateMove : IPlayerState
                 _playerController.SwitchState(typeof(PlayerStateMidAir).Name);
             }
         }
-        else if(_playerController.IsGrounded && !_playerController.IsSwim) _playerController.TempFallingSpeed = _playerController.GravityForce;
-        else if(_playerController.IsSwim) _playerController.TempFallingSpeed = 0f;
+        else if (_playerController.IsGrounded && !_playerController.IsSwim) _playerController.TempFallingSpeed = _playerController.GravityForce;
+        else if (_playerController.IsSwim && _playerController.PlayerTransform.position.y >= _playerController.WaterHeight) _playerController.TempFallingSpeed = 0f;
+        else if (_playerController.IsSwim && _playerController.PlayerTransform.position.y < _playerController.WaterHeight) _playerController.TempFallingSpeed = _playerController.PopupSpeed;
     }
     public virtual void Exit() { }
 

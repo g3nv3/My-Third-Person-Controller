@@ -3,7 +3,7 @@ public class PlayerStateSwimMove : PlayerStateMove
 {
     public PlayerStateSwimMove(PlayerController playerController) : base(playerController) { }
     public override void Enter() 
-    {
+    {   
         _playerController.Speed = _playerController.SwimSpeed;
         _playerController.PlayerAnimator.SetBool("IsSwim", true);
     }

@@ -15,5 +15,9 @@ public class PlayerStateJump : PlayerStateMove
         base.Update();
     }
 
-    public override void Exit() { }
+    public override void Exit() 
+    {
+        if(_playerController.CheckDistanceToGround() < _playerController.HeightToMidAirAnimation)
+            _playerController.PlayerAnimator.SetTrigger("StopJump");
+    }
 }
