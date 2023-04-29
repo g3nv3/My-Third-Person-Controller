@@ -7,6 +7,8 @@ public class PlayerInput : MonoBehaviour
     public UnityEvent OnSpaceEnter = new UnityEvent();
     public UnityEvent<Vector3> OnMoveInput = new UnityEvent<Vector3>();
     public UnityEvent NoneInput = new UnityEvent();
+    public UnityEvent OnCntrl = new UnityEvent();
+    public UnityEvent OnCntrlUp = new UnityEvent();
 
     private IControllable _controllable;
     private bool cursorVisible = false;
@@ -24,6 +26,8 @@ public class PlayerInput : MonoBehaviour
         ReadJump();
         ReadMove();        
         SetCursorVisible();
+        ReadCntrl();
+        ReadCntrlUp();
     }
 
     private void ReadMove()
@@ -42,6 +46,21 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             OnSpaceEnter.Invoke();
+    }
+
+    private void ReadCntrl()
+    {
+        if(Input.GetKey(KeyCode.LeftControl))
+            OnCntrl.Invoke();
+    }
+
+    private void ReadCntrlUp()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            OnCntrlUp.Invoke();
+        }
+            
     }
 
     private void BasePlayerUpdate()
