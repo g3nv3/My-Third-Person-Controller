@@ -24,7 +24,7 @@ public class PlayerUi : MonoBehaviour
             foreach (var image in _staminaBatImages)
             {
                 image.gameObject.SetActive(true);
-                image.fillAmount = _playerController.Stamina / 100f;
+                image.fillAmount = _playerController.Stamina / _playerController.StartStamina;
             }
                 
     }

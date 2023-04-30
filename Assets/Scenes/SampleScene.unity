@@ -2999,7 +2999,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618113709833}
-  m_LocalRotation: {x: 0.09526445, y: -0.7935481, z: 0.12877512, w: 0.58704615}
+  m_LocalRotation: {x: 0.09526445, y: -0.7935481, z: 0.12877513, w: 0.587046}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3883,8 +3883,8 @@ MonoBehaviour:
   _isSprint: 0
   _addPerscentSpeed: 50
   _stamina: 100
-  _coefStamina: 100
-  _minStaminaToStart: 50
+  _coefStamina: 10
+  _minStaminaToStart: 10
   _jumpForce: 15
   _heightToMidAirAnimation: 2
   tempFallingSpeed: -1

@@ -24,7 +24,6 @@ public class PlayerStateMove : IPlayerState
         {
             if (coll.gameObject.CompareTag("Water") && !_playerController.IsSwim && _playerController.PlayerStates != PlayerController.States.Death)
             {
-                Debug.LogWarning("Check Water");
                 _playerController.IsSwim = true;
                 _playerController.SwitchState(typeof(PlayerStateSwimMove).Name);
                 break;
