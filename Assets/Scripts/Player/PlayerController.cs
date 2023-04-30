@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour, IControllable
         Move,
         Swim,
         Dive,
-        MidAir
+        MidAir,
+        Death
     }
 
     [Header("Move")]
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour, IControllable
         _playerStates[typeof(PlayerStateSwimMove).Name] = new PlayerStateSwimMove(this);
         _playerStates[typeof(PlayerStateSwimIdle).Name] = new PlayerStateSwimIdle(this);
         _playerStates[typeof(PlayerStateDive).Name] = new PlayerStateDive(this);
+        _playerStates[typeof(PlayerStateDead).Name] = new PlayerStateDead(this);
     }
 
     private void SwitchSpeed(float speed)
@@ -156,6 +158,13 @@ public class PlayerController : MonoBehaviour, IControllable
         }        
     }
 
+    public void Death()
+    {
+        _canMove = false;
+        _canSprint = false;
+        _isSprint = false;
+        _isSwim = false;
+    }
     public void StopSprint()
     {
         if (_isSprint)
@@ -210,12 +219,12 @@ public class PlayerController : MonoBehaviour, IControllable
 
     public bool CheckCanMoveOnGround()
     {
-        return _canMove && _isGrounded && CheckWaterHeight();
+        return _canMove && _isGrounded && CheckWaterHeight(_waterHeight);
     }
 
-    public bool CheckWaterHeight()
+    public bool CheckWaterHeight(float waterHeight)
     {
-        if (_transform.position.y >= _waterHeight)
+        if (_transform.position.y >= waterHeight)
             return true;
         return false;
     }

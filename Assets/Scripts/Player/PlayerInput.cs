@@ -1,5 +1,6 @@
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public class PlayerInput : MonoBehaviour
@@ -14,8 +15,6 @@ public class PlayerInput : MonoBehaviour
 
     private IControllable _controllable;
     private bool cursorVisible = false;
-
-
     private void Start()
     {
         _controllable = GetComponent<IControllable>();
@@ -32,6 +31,10 @@ public class PlayerInput : MonoBehaviour
         ReadCntrlUp();
         ReadShift();
         ReadShiftUp();
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
 
     private void ReadMove()

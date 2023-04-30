@@ -18,11 +18,13 @@ public class PlayerStateMove : IPlayerState
 
     public void CheckWater()
     {
+       
         Collider[] colliders = Physics.OverlapSphere(_playerController.CheckWaterTransform.position, 0.2f);
         foreach (Collider coll in colliders)
         {
-            if (coll.gameObject.CompareTag("Water") && !_playerController.IsSwim)
+            if (coll.gameObject.CompareTag("Water") && !_playerController.IsSwim && _playerController.PlayerStates != PlayerController.States.Death)
             {
+                Debug.LogWarning("Check Water");
                 _playerController.IsSwim = true;
                 _playerController.SwitchState(typeof(PlayerStateSwimMove).Name);
                 break;
@@ -45,15 +47,16 @@ public class PlayerStateMove : IPlayerState
 
     public virtual void CheckStamina()
     {        
-        if (_playerController.Stamina >= 0f && _playerController.IsSprint)
+        if (_playerController.Stamina > 0f && _playerController.IsSprint)
             _playerController.Stamina -= Time.deltaTime * _playerController.CoefStamine;
-        else 
+        else if (_playerController.Stamina > 0f && _playerController.IsSwim)
+            _playerController.Stamina -= Time.deltaTime * _playerController.CoefStamine / 4f;
+        else
         {
-            if(_playerController.IsSprint) _playerController.StopSprint();
-            if(_playerController.Stamina < _playerController.StartStamina)
+            if(_playerController.IsSprint) _playerController.StopSprint();   
                 _playerController.Stamina += Time.deltaTime * _playerController.CoefStamine;
         }
-        _playerController.Stamina = Mathf.Clamp(_playerController.Stamina, 0f, 100f);
+        _playerController.Stamina = Mathf.Clamp(_playerController.Stamina, 0f, _playerController.StartStamina);
     }
     
     private void MovePlayer(Vector3 direction)

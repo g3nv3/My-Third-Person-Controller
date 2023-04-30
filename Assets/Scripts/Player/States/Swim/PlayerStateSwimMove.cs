@@ -19,7 +19,7 @@ public class PlayerStateSwimMove : PlayerStateMove
 
     public override void CalculateFallingSpeed()
     {
-        if (_playerController.CheckWaterHeight())
+        if (_playerController.CheckWaterHeight(_playerController.WaterHeight))
         {
             _playerController.PlayerAnimator.SetBool("IsPopup", false);
             _playerController.TempFallingSpeed = 0f;
@@ -28,8 +28,18 @@ public class PlayerStateSwimMove : PlayerStateMove
         {
             _playerController.PlayerAnimator.SetBool("IsPopup", true);
             _playerController.TempFallingSpeed = _playerController.PopupSpeed;
+        }    
+    }
+
+    public override void CheckStamina()
+    {        
+        if (_playerController.Stamina <= 0f)
+        {
+            _playerController.PlayerStates = PlayerController.States.Death;
+            _playerController.SwitchState(typeof(PlayerStateDead).Name);
         }
             
+        base.CheckStamina();
     }
 
     public override void RotatePlayer(float angle)
@@ -47,7 +57,7 @@ public class PlayerStateSwimMove : PlayerStateMove
 
     private void RotatePlayerInWater(float angle)
     {
-        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !_playerController.CheckWaterHeight())
+        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !_playerController.CheckWaterHeight(_playerController.WaterHeight))
             RotatePlayerInWater(angle, _playerController.Rot);
         else RotatePlayerInWater(0, _playerController.Rot);
     }
@@ -59,8 +69,12 @@ public class PlayerStateSwimMove : PlayerStateMove
 
     public override void Exit()
     {
-        _playerController.PlayerAnimator.SetBool("IsSwim", false);
+        if (_playerController.PlayerStates != PlayerController.States.Death)
+        {
+            _playerController.PlayerAnimator.SetBool("IsSwim", false);
+            _playerController.IsSwim = false;
+        }
         _playerController.PlayerAnimator.SetBool("IsPopup", false);
-        _playerController.IsSwim = false;
+        
     }
 }
