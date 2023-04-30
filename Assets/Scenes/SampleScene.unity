@@ -2640,7 +2640,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618113709833}
-  m_LocalRotation: {x: 0.095264435, y: -0.79354817, z: 0.12877516, w: 0.587046}
+  m_LocalRotation: {x: 0.09526445, y: -0.7935481, z: 0.12877512, w: 0.58704615}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3208,7 +3208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182619140616272}
-  m_LocalRotation: {x: 0.07387717, y: -0.79770213, z: 0.099864535, w: 0.5901191}
+  m_LocalRotation: {x: 0.073877156, y: -0.79770213, z: 0.09986453, w: 0.5901192}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3511,15 +3511,21 @@ MonoBehaviour:
   PlayerStates: 0
   _isGrounded: 0
   _canMove: 1
-  _speed: 15
+  _speed: 10
   _rotationSpeed: 15
   movementDirection: {x: 0, y: 0, z: 0}
   _isSwim: 0
-  _swimSpeed: 10
+  _swimSpeed: 5
   _popupSpeed: 6
   _diveSpeed: -6
   _angleOnDive: 45
   Rot: 5
+  _canSprint: 1
+  _isSprint: 0
+  _addPerscentSpeed: 50
+  _stamina: 100
+  _coefStamina: 1.5
+  _minStaminaToStart: 15
   _jumpForce: 15
   _heightToMidAirAnimation: 2
   tempFallingSpeed: -1
@@ -3709,6 +3715,48 @@ MonoBehaviour:
       - m_Target: {fileID: 4099289864825440139}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: Popup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnShift:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: StartSprint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnShiftUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: StopSprint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4099289864825440139}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: ShiftUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

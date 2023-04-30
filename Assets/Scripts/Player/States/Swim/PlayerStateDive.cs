@@ -8,6 +8,7 @@ public class PlayerStateDive : PlayerStateSwimMove
         base.Enter();
         _playerController.PlayerStates = PlayerController.States.Dive;
         _playerController.TempFallingSpeed = _playerController.DiveSpeed;
+        _playerController.PlayerAnimator.SetBool("IsDive", true);
     }
 
     public override void Update()
@@ -21,5 +22,6 @@ public class PlayerStateDive : PlayerStateSwimMove
     }
 
     public override void Exit() {
+        _playerController.PlayerAnimator.SetBool("IsDive", false);
     }
 }

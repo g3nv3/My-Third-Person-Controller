@@ -6,7 +6,7 @@ public class PlayerStateSwimMove : PlayerStateMove
     public override void Enter() 
     {
         _playerController.PlayerStates = PlayerController.States.Swim;
-        _playerController.Speed = _playerController.SwimSpeed;
+        PlayerController.SwitchPlayerSpeed.Invoke(_playerController.SwimSpeed);
         _playerController.PlayerAnimator.SetBool("IsSwim", true);
         _playerController.IsSwim = true;
         CalculateFallingSpeed();
@@ -19,11 +19,17 @@ public class PlayerStateSwimMove : PlayerStateMove
 
     public override void CalculateFallingSpeed()
     {
-        if (_playerController.IsSwim && _playerController.CheckWaterHeight())
+        if (_playerController.CheckWaterHeight())
+        {
+            _playerController.PlayerAnimator.SetBool("IsPopup", false);
             _playerController.TempFallingSpeed = 0f;
-        
-        else if (_playerController.IsSwim && !_playerController.CheckWaterHeight())
+        }   
+        else
+        {
+            _playerController.PlayerAnimator.SetBool("IsPopup", true);
             _playerController.TempFallingSpeed = _playerController.PopupSpeed;
+        }
+            
     }
 
     public override void RotatePlayer(float angle)
@@ -54,7 +60,7 @@ public class PlayerStateSwimMove : PlayerStateMove
     public override void Exit()
     {
         _playerController.PlayerAnimator.SetBool("IsSwim", false);
+        _playerController.PlayerAnimator.SetBool("IsPopup", false);
         _playerController.IsSwim = false;
-        _playerController.Speed = _playerController.BaseSpeed;
     }
 }

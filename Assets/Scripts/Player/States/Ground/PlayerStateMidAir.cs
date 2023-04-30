@@ -7,6 +7,8 @@ public class PlayerStateMidAir : PlayerStateMove
     {
         _playerController.PlayerStates = PlayerController.States.MidAir;
         _playerController.PlayerAnimator.SetTrigger("MidAir");
+        _playerController.CanSprint = false;
+        _playerController.StopSprint();
     }
 
     public override void Update()
@@ -20,5 +22,6 @@ public class PlayerStateMidAir : PlayerStateMove
     {
         if(!_playerController.IsSwim)
             _playerController.PlayerAnimator.SetTrigger("Land");
+        _playerController.CanSprint = true;
     }
 }

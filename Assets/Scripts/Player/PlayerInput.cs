@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
     public UnityEvent NoneInput = new UnityEvent();
     public UnityEvent OnCntrl = new UnityEvent();
     public UnityEvent OnCntrlUp = new UnityEvent();
+    public UnityEvent OnShift = new UnityEvent();
+    public UnityEvent OnShiftUp = new UnityEvent();
 
     private IControllable _controllable;
     private bool cursorVisible = false;
@@ -28,6 +30,8 @@ public class PlayerInput : MonoBehaviour
         SetCursorVisible();
         ReadCntrl();
         ReadCntrlUp();
+        ReadShift();
+        ReadShiftUp();
     }
 
     private void ReadMove()
@@ -57,10 +61,19 @@ public class PlayerInput : MonoBehaviour
     private void ReadCntrlUp()
     {
         if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            OnCntrlUp.Invoke();
-        }
-            
+            OnCntrlUp.Invoke();           
+    }
+
+    private void ReadShift()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+            OnShift.Invoke();
+    }
+
+    private void ReadShiftUp()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            OnShiftUp.Invoke();
     }
 
     private void BasePlayerUpdate()

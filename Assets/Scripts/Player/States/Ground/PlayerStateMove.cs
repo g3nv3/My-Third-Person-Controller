@@ -7,6 +7,7 @@ public class PlayerStateMove : IPlayerState
     public Vector3 movementDirection = Vector3.zero;
 
     public virtual void Enter() {
+        PlayerController.SwitchPlayerSpeed.Invoke(_playerController.BaseSpeed);
         _playerController.PlayerStates = PlayerController.States.Move;
     }
 
@@ -32,15 +33,27 @@ public class PlayerStateMove : IPlayerState
     {
         movementDirection.x = 0f;
         movementDirection.z = 0f;
+        CheckStamina();
         MovePlayer(_playerController.MoveDirection);
         if(_playerController.MoveDirection != Vector3.zero) RotatePlayer(0);
         CheckWater();
-
         movementDirection.y = _playerController.TempFallingSpeed;
-        
-        
-        _playerController.PlayerCharacterController.Move(movementDirection * Time.deltaTime);
         CalculateFallingSpeed();
+        _playerController.PlayerCharacterController.Move(movementDirection * Time.deltaTime);
+        
+    }
+
+    public virtual void CheckStamina()
+    {        
+        if (_playerController.Stamina >= 0f && _playerController.IsSprint)
+            _playerController.Stamina -= Time.deltaTime * _playerController.CoefStamine;
+        else 
+        {
+            if(_playerController.IsSprint) _playerController.StopSprint();
+            if(_playerController.Stamina < _playerController.StartStamina)
+                _playerController.Stamina += Time.deltaTime * _playerController.CoefStamine;
+        }
+        _playerController.Stamina = Mathf.Clamp(_playerController.Stamina, 0f, 100f);
     }
     
     private void MovePlayer(Vector3 direction)
