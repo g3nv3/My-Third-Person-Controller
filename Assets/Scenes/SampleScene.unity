@@ -2610,8 +2610,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182617488926921}
-  m_LocalRotation: {x: 0.070887394, y: -0.7981976, z: 0.09582309, w: 0.5904859}
-  m_LocalPosition: {x: -0.055191994, y: 40.075, z: 3.511239}
+  m_LocalRotation: {x: 0.07081881, y: -0.79862005, z: 0.09587377, w: 0.58991444}
+  m_LocalPosition: {x: -0.060228348, y: 40.075, z: 3.5276556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2890,7 +2890,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182617717970412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.055191994, y: 40.075, z: 3.511239}
+  m_LocalPosition: {x: -0.060228348, y: 40.075, z: 3.5276556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2999,7 +2999,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618113709833}
-  m_LocalRotation: {x: 0.09526445, y: -0.7935481, z: 0.12877513, w: 0.587046}
+  m_LocalRotation: {x: 0.095172286, y: -0.7939679, z: 0.12884325, w: 0.5864782}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3142,7 +3142,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182618606976966}
-  m_LocalRotation: {x: 0.07088738, y: -0.7981977, z: 0.09582306, w: 0.59048575}
+  m_LocalRotation: {x: 0.070818804, y: -0.79862, z: 0.09587376, w: 0.5899145}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3567,7 +3567,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3398182619140616272}
-  m_LocalRotation: {x: 0.073877156, y: -0.79770213, z: 0.09986453, w: 0.5901192}
+  m_LocalRotation: {x: 0.0738057, y: -0.79812413, z: 0.09991737, w: 0.58954823}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3867,7 +3867,7 @@ MonoBehaviour:
   _playerMass: 5
   _checkWaterTransform: {fileID: 1171938384}
   _waterHeight: 26.1
-  PlayerStates: 0
+  _currentPlayerState: 0
   _isGrounded: 0
   _canMove: 1
   _speed: 10
@@ -3877,14 +3877,14 @@ MonoBehaviour:
   _swimSpeed: 5
   _popupSpeed: 6
   _diveSpeed: -6
-  _angleOnDive: 45
-  Rot: 5
+  _angleOnDive: 30
+  _rotationSpeedInWater: 10
   _canSprint: 1
   _isSprint: 0
   _addPerscentSpeed: 50
   _stamina: 100
-  _coefStamina: 10
-  _minStaminaToStart: 10
+  _multiplierStaminaConsumption: 20
+  _minStaminaToSprint: 15
   _jumpForce: 15
   _heightToMidAirAnimation: 2
   tempFallingSpeed: -1

@@ -5,7 +5,7 @@ public class PlayerStateMidAir : PlayerStateMove
     public PlayerStateMidAir(PlayerController playerController) : base(playerController) { }
     public override void Enter()
     {
-        _playerController.PlayerStates = PlayerController.States.MidAir;
+        _playerController.CurrentPlayerState = PlayerController.PlayerStates.MidAir;
         _playerController.PlayerAnimator.SetTrigger("MidAir");
         _playerController.CanSprint = false;
         _playerController.StopSprint();

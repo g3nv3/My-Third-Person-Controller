@@ -5,7 +5,7 @@ public class PlayerStateSwimMove : PlayerStateMove
     public PlayerStateSwimMove(PlayerController playerController) : base(playerController) { }
     public override void Enter() 
     {
-        _playerController.PlayerStates = PlayerController.States.Swim;
+        _playerController.CurrentPlayerState = PlayerController.PlayerStates.Swim;
         PlayerController.SwitchPlayerSpeed.Invoke(_playerController.SwimSpeed);
         _playerController.PlayerAnimator.SetBool("IsSwim", true);
         _playerController.IsSwim = true;
@@ -17,9 +17,9 @@ public class PlayerStateSwimMove : PlayerStateMove
         base.Update();
     }
 
-    public override void CalculateFallingSpeed()
+    protected override void CalculateFallingSpeed()
     {
-        if (_playerController.CheckWaterHeight(_playerController.WaterHeight))
+        if (_playerController.CheckPlayerOnWater(_playerController.WaterHeight))
         {
             _playerController.PlayerAnimator.SetBool("IsPopup", false);
             _playerController.TempFallingSpeed = 0f;
@@ -31,45 +31,36 @@ public class PlayerStateSwimMove : PlayerStateMove
         }    
     }
 
-    public override void CheckStamina()
+    protected override void CheckStamina()
     {        
         if (_playerController.Stamina <= 0f)
         {
-            _playerController.PlayerStates = PlayerController.States.Death;
+            _playerController.CurrentPlayerState = PlayerController.PlayerStates.Death;
+            RotatePlayerInWater(0f, _playerController.RotationSpeedInWater);
             _playerController.SwitchState(typeof(PlayerStateDead).Name);
         }
             
         base.CheckStamina();
     }
 
-    public override void RotatePlayer(float angle)
+    protected override void RotatePlayer(float angle, float rotaionSpeed)
     {
-        Quaternion tempCameraRotation = _playerController.CameraTransform.rotation;
-        _playerController.CameraTransform.rotation = Quaternion.Euler(0f, _playerController.CameraTransform.eulerAngles.y, 0f);
-        movementDirection = _playerController.CameraTransform.TransformDirection(movementDirection);
-        _playerController.CameraTransform.rotation = tempCameraRotation;
-
-        if (_playerController.PlayerStates == PlayerController.States.Swim)
-            RotatePlayerInWater(-_playerController.Rot);
-        else if (_playerController.PlayerStates == PlayerController.States.Dive)
-            RotatePlayerInWater(_playerController.Rot);
+        if (_playerController.CurrentPlayerState == PlayerController.PlayerStates.Swim)
+            RotatePlayerInWater(-_playerController.AngleOnDive, _playerController.RotationSpeedInWater);
+        else if (_playerController.CurrentPlayerState == PlayerController.PlayerStates.Dive)
+            RotatePlayerInWater(_playerController.AngleOnDive, _playerController.RotationSpeedInWater);
     }
 
-    private void RotatePlayerInWater(float angle)
+    private void RotatePlayerInWater(float angle, float rotationSpeed)
     {
-        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !_playerController.CheckWaterHeight(_playerController.WaterHeight))
-            RotatePlayerInWater(angle, _playerController.Rot);
-        else RotatePlayerInWater(0, _playerController.Rot);
-    }
-
-    private void RotatePlayerInWater(float angle, float rot)
-    {
-        _playerController.PlayerTransform.rotation = Quaternion.Slerp(_playerController.PlayerTransform.rotation, Quaternion.LookRotation(new Vector3(movementDirection.x, -angle, movementDirection.z)), rot * Time.deltaTime);
+        if ((Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) && !_playerController.CheckPlayerOnWater(_playerController.WaterHeight))
+            base.RotatePlayer(angle, rotationSpeed);
+        else base.RotatePlayer(0, rotationSpeed);
     }
 
     public override void Exit()
     {
-        if (_playerController.PlayerStates != PlayerController.States.Death)
+        if (_playerController.CurrentPlayerState != PlayerController.PlayerStates.Death)
         {
             _playerController.PlayerAnimator.SetBool("IsSwim", false);
             _playerController.IsSwim = false;

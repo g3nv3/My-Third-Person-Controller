@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
         var vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0, vertical);
 
-        if (direction != Vector3.zero)
+        if (Mathf.Abs(horizontal) > 0.01f || Mathf.Abs(vertical) > 0.01f)
             OnMoveInput.Invoke(direction);
         else
             NoneInput.Invoke();
