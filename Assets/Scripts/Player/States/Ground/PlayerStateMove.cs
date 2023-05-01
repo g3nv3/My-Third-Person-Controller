@@ -82,7 +82,6 @@ public class PlayerStateMove : IPlayerState
         GetLocalMovement();
         Quaternion tempQuaternion = Quaternion.LookRotation(new Vector3(movementDirection.x, 0f, movementDirection.z));
         _playerController.PlayerTransform.rotation = Quaternion.Lerp(_playerController.PlayerTransform.rotation, Quaternion.Euler(angle, tempQuaternion.eulerAngles.y, 0f), rotationSpeed * Time.deltaTime);
-       
     }
 
     protected void GetLocalMovement()
